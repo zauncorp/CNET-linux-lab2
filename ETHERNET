@@ -1,0 +1,22 @@
+# CNET-linux-lab2
+
+compile = "ethernet.c"
+lansegment UIT {
+lan-bandwidth = 10Mbps
+x=100, y=200
+}
+host computer_A {
+lan to UIT {
+nicaddr = 00:90:27:62:58:84
+}
+}
+host computer_B {
+lan to UIT {
+nicaddr = 00:90:27:41:B0:BE
+}
+}
+host computer_C {
+lan to UIT {
+nicaddr = 00:A0:C9:AF:9E:81
+}
+}

@@ -1,5 +1,6 @@
 # CNET-linux-lab2
 
+
 compile = "ethernet.c"
 lansegment UIT {
 lan-bandwidth = 10Mbps

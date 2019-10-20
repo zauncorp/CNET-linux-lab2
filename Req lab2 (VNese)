@@ -1,0 +1,37 @@
+# CNET-linux-lab2
+
+1. Khi người dùng nhập vào tên của máy đích (ví dụ: computer_B, khác với máy hiện
+hành) từ cửa sổ của một trong 3 máy thì lập tức gửi một Ethernet frame chứa thông
+điệp “Hello, M” qua đường truyền vật lý với M là địa chỉ MAC của máy đích.
+Gợi ý:
+void on_keyboard( CnetEvent event, CnetTimerID timer, CnetData
+data ){
+char buffer[100];
+size_t bufferLength = 100;
+CHECK( CNET_read_keyboard( buffer, &bufferLength ) );
+int i = -1;
+if(!strcmp(buffer, "computer_A"))
+i = 0;
+else if(!strcmp(buffer, "computer_B"))
+i = 1;
+else if(!strcmp(buffer, "computer_C"))
+i = 2;
+if(i != -1) {
+char greeting[100];
+size_t greetingLength = 100;
+sprintf(greeting, "Hello, %s", NICAddresses[i]);
+CnetNICaddr dest;
+CNET_parse_nicaddr(dest, NICAddresses[i]);
+write_to_ethernet(dest, 1, greeting, greetingLength);
+printf("Sending\n");
+}
+//printf( "You just typed '%s'.\n", greeting );
+}
+
+2. Có bao nhiêu máy tính nhận được thông điệp ở câu 1? Tại sao?
+
+3. Viết tiếp vào on_phys_ready xử lý xuất ra màn hình dòng chữ “Correct destination
+address” nếu địa chỉ MAC trong frame trùng với địa chỉ MAC của máy tính hiện
+hành hoặc đó là một địa chỉ broadcast (ff:ff:ff:ff:ff:ff). Nếu không, xuất ra màn hình
+“Wrong destination address”. Cho biết linkinfo[i].nicaddr là địa chỉ MAC của máy
+hiện hành tương ứng đường liên kết vật lý thứ i.
